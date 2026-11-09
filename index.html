@@ -24,10 +24,10 @@
         /* Шапка-баннер */
         .full-width-banner {
             width: 100%;
-            height: 30vh; 
-            background-image: url('./media/img/banner.png'); /* Обновили на banner.png */
+            height: 35vh; /* Изменили высоту на 35vh */
+            background-image: url('media/img/banner.webp'); 
             background-size: cover;
-            background-position: top center;
+            background-position: center center;
             border-bottom: 1px solid #1a1a1a;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display: block;
@@ -63,16 +63,16 @@
             border-radius: 4px;
         }
         h1 { 
-            font-size: 2.5rem; 
-            letter-spacing: 6px; 
-            margin-bottom: 20px;
+            font-size: 3.5rem; 
+            letter-spacing: 10px; 
+            margin-bottom: 25px;
             text-transform: uppercase;
             font-weight: bold;
         }
         .subtitle { 
-            font-size: 1rem; 
-            line-height: 1.7;
-            color: #777;
+            font-size: 12.0px; /* 1.2rem заменили на точные пиксели для стабильности */
+            line-height: 1.8;
+            color: #888;
             margin-bottom: 45px;
         }
         
@@ -173,7 +173,7 @@
         <!-- Левое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="./media/video/promo_1.mp4" type="video/mp4"> <!-- Обновили на promo_1.mp4 -->
+                <source src="video/promo_1.mp4" type="video/mp4">
             </video>
         </div>
 
@@ -196,13 +196,13 @@
             <!-- Ряд из трех квадратных картинок -->
             <div class="photo-gallery">
                 <div class="photo-block">
-                    <img src="./media/img/photo.png" alt="Noir Cortege Artwork 1"> <!-- Обновили на photo.png -->
+                    <img src="media/img/photo_1.webp" alt="Noir Cortege Artwork 1">
                 </div>
                 <div class="photo-block">
-                    <img src="./media/img/photo_2.jpg" alt="Noir Cortege Artwork 2">
+                    <img src="media/img/photo_2.webp" alt="Noir Cortege Artwork 2">
                 </div>
                 <div class="photo-block">
-                    <img src="./media/img/photo_3.jpg" alt="Noir Cortege Artwork 3">
+                    <img src="media/img/photo_3.webp" alt="Noir Cortege Artwork 3">
                 </div>
             </div>
 
@@ -211,7 +211,7 @@
         <!-- Правое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="./media/video/promo_1.mp4" type="video/mp4"> <!-- Обновили на promo_1.mp4 -->
+                <source src="video/promo_1.mp4" type="video/mp4">
             </video>
         </div>
 
