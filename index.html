@@ -24,16 +24,96 @@
         /* Шапка-баннер */
         .full-width-banner {
             width: 100%;
-            height: 30vh; 
-            background-image: url('media/img/banner.webp'); /* Убрали точку в начале для надежности */
+            height: 35vh; 
+            background-image: url('media/img/banner.webp'); 
             background-size: cover;
-            background-position: top center;
+            background-position: center center;
             border-bottom: 1px solid #1a1a1a;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display: block;
         }
 
-        /* Главная трехколоночная сетка во всю ширину экрана */
+        /* Контейнер для кастомного ползунка громкости */
+        .volume-highway {
+            width: 100%;
+            margin-top: 10px; 
+            padding: 0 10px;  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 20;
+        }
+
+        .volume-wrapper {
+            width: 100%;
+            background: #111;
+            border: 1px solid #222;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        /* Иконка копов на нуле громкости */
+        .police-icon {
+            width: 40px;
+            height: 40px;
+            background-image: url('media/img/police_car.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        /* Стилизация самого трека ползунка */
+        .custom-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            outline: none;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        /* Дизайн бегунка (Гелик gclass.png) для Chrome, Safari, Edge */
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 45px;
+            height: 45px;
+            background-image: url('media/img/gclass.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .custom-slider::-webkit-slider-thumb:active {
+            transform: scale(1.1);
+        }
+
+        /* Дизайн бегунка для Firefox */
+        .custom-slider::-moz-range-thumb {
+            width: 45px;
+            height: 45px;
+            background-image: url('media/img/gclass.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        /* Главная трехколоночная сетка ниже ползунка */
         .main-layout {
             display: flex;
             justify-content: space-between; 
@@ -70,9 +150,9 @@
             font-weight: bold;
         }
         .subtitle { 
-            font-size: 1rem; 
-            line-height: 1.7;
-            color: #777;
+            font-size: 12px; 
+            line-height: 1.8;
+            color: #888;
             margin-bottom: 45px;
         }
         
@@ -157,7 +237,6 @@
             object-fit: cover; 
         }
 
-        /* Показываем видео только на больших экранах десктопов */
         @media (max-width: 1100px) {
             .video-background {
                 display: none;
@@ -167,15 +246,30 @@
 </head>
 <body>
 
-    <!-- Шапка сайта -->
+    <!-- Скрытый плеер (loop отвечает за бесконечное зацикливание) -->
+    <audio id="bg-beat" loop preload="auto">
+        <source src="media/sound/beat.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Шапка-баннер -->
     <div class="full-width-banner"></div>
 
+    <!-- ТРАССА ГРОМКОСТИ -->
+    <div class="volume-highway">
+        <div class="volume-wrapper">
+            <div class="police-icon" id="police-car"></div>
+            <!-- value="0.25" выставляет Гелик ровно на 25% длины трассы -->
+            <input type="range" id="volume-control" class="custom-slider" min="0" max="1" step="0.01" value="0.25">
+        </div>
+    </div>
+
+    <!-- Главная трехколоночная область -->
     <div class="main-layout">
 
         <!-- Левое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="media/video/promo_1.mp4" type="video/mp4">
+                <source src="video/promo_1.mp4" type="video/mp4">
             </video>
         </div>
 
@@ -213,11 +307,36 @@
         <!-- Правое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="media/video/promo_1.mp4" type="video/mp4">
+                <source src="video/promo_1.mp4" type="video/mp4">
             </video>
         </div>
 
     </div>
 
-</body>
-</html>
+    <script>
+        const audio = document.getElementById('bg-beat');
+        const volumeSlider = document.getElementById('volume-control');
+        const policeCar = document.getElementById('police-car');
+// Инициализируем стартовую громкость звукового движка на 25% (0.25)
+    audio.volume = volumeSlider.value;
+// Трек запустится на 25% громкости сразу после первого клика по экрану
+    document.addEventListener('click', () => {
+        if (audio.paused && audio.volume > 0) {
+    audio.play().catch(e => console.log("Ожидание клика пользователя"));
+        }
+    }, { once: true });
+// Изменение громкости при перетаскивании Гелика
+    volumeSlider.addEventListener('input', (e) => {
+        const currentVolume = e.target.value;
+    audio.volume = currentVolume;
+        if (currentVolume > 0 && audio.paused) {
+    audio.play();
+    }
+        if (currentVolume == 0) {
+    policeCar.style.transform = 'scale(1.25) rotate(-8deg)';
+        } else if (currentVolume < 0.15) {
+    policeCar.style.transform = 'scale(1.1)';
+        } else {
+    policeCar.style.transform = 'scale(1)';
+        }
+    });
