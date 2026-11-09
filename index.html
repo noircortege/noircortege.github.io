@@ -25,7 +25,7 @@
         .full-width-banner {
             width: 100%;
             height: 45vh; 
-            background-image: url('media/img/top.jpg'); /* Поменяли на top.jpg */
+            background-image: url('media/img/top.jpg');
             background-size: cover;
             background-position: top center;
             border-bottom: 1px solid #1a1a1a;
@@ -36,7 +36,7 @@
         /* Главная трехколоночная сетка во всю ширину экрана */
         .main-layout {
             display: flex;
-            justify-content: space-between; /* Расталкивает видео по самым краям */
+            justify-content: space-between; 
             align-items: flex-start;
             gap: 10px; /* Отступ 10px между видео и информацией */
             width: 100%;
@@ -44,11 +44,18 @@
             padding: 0 10px 20px 10px; /* Отступы ровно 10px от краев экрана */
         }
 
-        /* Полностью резиновая центральная карточка */
+        /* Полностью резиновый центральный блок, объединяющий карточку и новое фото */
+        .center-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Отступ ровно 10px между карточкой информации и новым фото */
+            min-width: 280px;
+        }
+
+        /* Центральная карточка с информацией */
         .container {
-            flex: 1; /* Карточка забирает ВСЁ свободное место между роликами */
-            max-width: 100%; /* Убираем жесткое ограничение в 650px */
-            min-width: 280px; 
+            width: 100%;
             border: 1px solid #222;
             padding: 60px 20px; 
             background: rgba(17, 17, 17, 0.95);
@@ -105,6 +112,23 @@
             background: #1a1a1a;
         }
 
+        /* Новый резиновый блок для квадратного фото */
+        .photo-block {
+            width: 100%;
+            border: 1px solid #222;
+            background: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+        }
+        .photo-block img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1; /* Гарантирует строгий квадратные пропорции */
+            object-fit: cover; /* Красиво вписывает фото, если оно изначально не совсем квадратное */
+        }
+
         /* Боковые видео фиксированной ширины */
         .video-background {
             width: 360px; 
@@ -114,19 +138,17 @@
             overflow: hidden;
             opacity: 0.4;
             transition: opacity 0.3s ease;
-            flex-shrink: 0; /* Ролики сохраняют свои 360px и не сжимаются */
+            flex-shrink: 0; 
         }
         .video-background:hover {
             opacity: 0.7;
         }
-
         .video-background video {
             width: 100%;
             height: 100%;
             object-fit: cover; 
         }
 
-        /* Адаптивность: если экран слишком узкий (меньше 1100px), скрываем боковые видео, чтобы не ломать сайт */
         @media (max-width: 1100px) {
             .video-background {
                 display: none;
@@ -136,13 +158,13 @@
 </head>
 <body>
 
-    <!-- 1. Баннер 45vh с новой картинкой top.jpg -->
+    <!-- 1. Баннер 45vh с картинкой top.jpg -->
     <div class="full-width-banner"></div>
 
     <!-- 2. Главная ультра-широкая область -->
     <div class="main-layout">
 
-        <!-- Левое видео (прижато к левому краю экрана на 10px) -->
+        <!-- Левое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
                 <source src="media/video/promo.mp4" type="video/mp4">
@@ -150,21 +172,31 @@
             </video>
         </div>
 
-        <!-- Центральный резиновый блок (растягивается от ролика до ролика) -->
-        <div class="container">
-            <h1>NOIR CORTEGE</h1>
-            <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
+        <!-- Центральная резиновая колонка (Контент + Фото ниже) -->
+        <div class="center-column">
+            
+            <!-- Блок информации -->
+            <div class="container">
+                <h1>NOIR CORTEGE</h1>
+                <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
 
-            <div class="links-title">Listen & Follow</div>
-            <div class="social-links">
-                <a href="#" target="_blank" class="social-btn"><i class="fa-solid fa-music"></i> Yandex</a>
-                <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-spotify"></i> Spotify</a>
-                <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
-                <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> Tik-Tok</a>
+                <div class="links-title">Listen & Follow</div>
+                <div class="social-links">
+                    <a href="#" target="_blank" class="social-btn"><i class="fa-solid fa-music"></i> Yandex</a>
+                    <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-spotify"></i> Spotify</a>
+                    <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                    <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> Tik-Tok</a>
+                </div>
             </div>
+
+            <!-- Новый блок с квадратной картинкой photo_1.jpg -->
+            <div class="photo-block">
+                <img src="media/img/photo_1.jpg" alt="Noir Cortege Artwork">
+            </div>
+
         </div>
 
-        <!-- Правое видео (прижато к правому краю экрана на 10px) -->
+        <!-- Правое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
                 <source src="media/video/promo.mp4" type="video/mp4">
