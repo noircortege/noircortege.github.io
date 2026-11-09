@@ -25,30 +25,30 @@
         .full-width-banner {
             width: 100%;
             height: 45vh; 
-            background-image: url('media/img/banner.jpg'); 
+            background-image: url('media/img/top.jpg'); /* Поменяли на top.jpg */
             background-size: cover;
             background-position: top center;
             border-bottom: 1px solid #1a1a1a;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: block; /* Гарантирует отображение элемента */
+            display: block;
         }
 
-        /* Главная трехколоночная сетка */
+        /* Главная трехколоночная сетка во всю ширину экрана */
         .main-layout {
             display: flex;
-            justify-content: center;
+            justify-content: space-between; /* Расталкивает видео по самым краям */
             align-items: flex-start;
             gap: 10px; /* Отступ 10px между видео и информацией */
             width: 100%;
             margin-top: 10px; /* Отступ 10px от баннера сверху */
-            padding: 0 10px 20px 10px; /* Отступы 10px от краев экрана (слева и справа) */
+            padding: 0 10px 20px 10px; /* Отступы ровно 10px от краев экрана */
         }
 
-        /* Резиновая центральная карточка */
+        /* Полностью резиновая центральная карточка */
         .container {
-            flex: 1; /* Карточка гибко сжимается и расширяется */
-            max-width: 650px; 
-            min-width: 280px; /* Защита от слишком сильного сжатия */
+            flex: 1; /* Карточка забирает ВСЁ свободное место между роликами */
+            max-width: 100%; /* Убираем жесткое ограничение в 650px */
+            min-width: 280px; 
             border: 1px solid #222;
             padding: 60px 20px; 
             background: rgba(17, 17, 17, 0.95);
@@ -105,7 +105,7 @@
             background: #1a1a1a;
         }
 
-        /* Боковые видео */
+        /* Боковые видео фиксированной ширины */
         .video-background {
             width: 360px; 
             height: 640px; 
@@ -114,19 +114,19 @@
             overflow: hidden;
             opacity: 0.4;
             transition: opacity 0.3s ease;
-            flex-shrink: 0; 
+            flex-shrink: 0; /* Ролики сохраняют свои 360px и не сжимаются */
         }
         .video-background:hover {
             opacity: 0.7;
         }
 
-        .video-background iframe {
+        .video-background video {
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover; 
         }
 
-        /* Адаптивность: скрываем видео на экранах меньше 1100px, чтобы не зажимать карточку */
+        /* Адаптивность: если экран слишком узкий (меньше 1100px), скрываем боковые видео, чтобы не ломать сайт */
         @media (max-width: 1100px) {
             .video-background {
                 display: none;
@@ -136,19 +136,21 @@
 </head>
 <body>
 
-    <!-- 1. Баннер 45vh -->
+    <!-- 1. Баннер 45vh с новой картинкой top.jpg -->
     <div class="full-width-banner"></div>
 
-    <!-- 2. Главная область (Сетка с отступами по 10px) -->
+    <!-- 2. Главная ультра-широкая область -->
     <div class="main-layout">
 
-        <!-- Левое видео -->
+        <!-- Левое видео (прижато к левому краю экрана на 10px) -->
         <div class="video-background">
-            <!-- ВНИМАНИЕ: Замените ОБА текста ВАШ_ID_ВИДЕО на реальный буквенно-цифровой код Shorts -->
-            <iframe src="https://youtube.com" allow="autoplay"></iframe>
+            <video autoplay loop muted playsinline>
+                <source src="media/video/promo.mp4" type="video/mp4">
+                Ваш браузер не поддерживает встроенные видео.
+            </video>
         </div>
 
-        <!-- Центральный резиновый блок -->
+        <!-- Центральный резиновый блок (растягивается от ролика до ролика) -->
         <div class="container">
             <h1>NOIR CORTEGE</h1>
             <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
@@ -162,9 +164,12 @@
             </div>
         </div>
 
-        <!-- Правое видео -->
+        <!-- Правое видео (прижато к правому краю экрана на 10px) -->
         <div class="video-background">
-            <iframe src="https://youtube.com" allow="autoplay"></iframe>
+            <video autoplay loop muted playsinline>
+                <source src="media/video/promo.mp4" type="video/mp4">
+                Ваш браузер не поддерживает встроенные видео.
+            </video>
         </div>
 
     </div>
