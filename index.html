@@ -16,55 +16,54 @@
             align-items: center; 
             min-height: 100vh; 
             text-align: center;
-            /* Включаем скроллинг */
             overflow-y: auto; 
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Полноэкранная шапка-баннер на самом верху */
+        /* Шапка-баннер */
         .full-width-banner {
             width: 100%;
-            height: 45vh; /* Увеличили высоту баннера, чтобы он выглядел масштабнее */
+            height: 45vh; 
             background-image: url('media/img/banner.jpg'); 
             background-size: cover;
             background-position: top center;
             border-bottom: 1px solid #1a1a1a;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: block; /* Гарантирует отображение элемента */
         }
 
-        /* Главная трехколоночная сетка для нижней части сайта */
+        /* Главная трехколоночная сетка */
         .main-layout {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 40px; /* Отступы между видео и центральным блоком */
-            max-width: 1400px; 
+            gap: 10px; /* Отступ 10px между видео и информацией */
             width: 100%;
-            margin-top: 40px; /* Аккуратный отступ от баннера в 45vh */
-            padding: 0 30px 60px 30px; /* Отступ снизу, чтобы при скролле сайт не упирался в край экрана */
+            margin-top: 10px; /* Отступ 10px от баннера сверху */
+            padding: 0 10px 20px 10px; /* Отступы 10px от краев экрана (слева и справа) */
         }
 
-
-        /* Увеличенная центральная карточка с информацией */
+        /* Резиновая центральная карточка */
         .container {
-            max-width: 650px; /* Увеличили ширину карточки (было 550px) */
-            width: 100%;
+            flex: 1; /* Карточка гибко сжимается и расширяется */
+            max-width: 650px; 
+            min-width: 280px; /* Защита от слишком сильного сжатия */
             border: 1px solid #222;
-            padding: 60px 40px; /* Увеличили внутренние отступы, чтобы блок стал больше */
+            padding: 60px 20px; 
             background: rgba(17, 17, 17, 0.95);
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             border-radius: 4px;
         }
         h1 { 
-            font-size: 2.8rem; /* Увеличили размер главного заголовка */
+            font-size: 2.5rem; 
             letter-spacing: 6px; 
             margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: bold;
         }
         .subtitle { 
-            font-size: 1.1rem; /* Увеличили шрифт описания */
+            font-size: 1rem; 
             line-height: 1.7;
             color: #777;
             margin-bottom: 45px;
@@ -81,7 +80,7 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
         .social-btn {
@@ -89,12 +88,12 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            min-width: 160px; /* Увеличили ширину кнопок (было 130px) */
-            padding: 14px 20px; /* Сделали кнопки крупнее и объемнее */
+            min-width: 140px; 
+            padding: 14px 15px; 
             border: 1px solid #333;
             color: #aaa;
             text-decoration: none;
-            font-size: 0.95rem; /* Слегка увеличили текст внутри кнопок */
+            font-size: 0.9rem; 
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
@@ -106,16 +105,16 @@
             background: #1a1a1a;
         }
 
-        /* Увеличенные боковые видео (теперь прокручиваются вместе с сайтом) */
+        /* Боковые видео */
         .video-background {
-            width: 360px; /* Увеличили ширину шортсов (было 315px) */
-            height: 640px; /* Увеличили высоту под стандарт 9:16 (было 560px) */
+            width: 360px; 
+            height: 640px; 
             border: 1px solid #1a1a1a;
             border-radius: 8px;
             overflow: hidden;
             opacity: 0.4;
             transition: opacity 0.3s ease;
-            flex-shrink: 0; /* Видео не будут сжиматься */
+            flex-shrink: 0; 
         }
         .video-background:hover {
             opacity: 0.7;
@@ -127,31 +126,29 @@
             border: none;
         }
 
-        /* Адаптивность: плавно убираем боковые видео, если экран становится слишком узким */
-        @media (max-width: 1250px) {
+        /* Адаптивность: скрываем видео на экранах меньше 1100px, чтобы не зажимать карточку */
+        @media (max-width: 1100px) {
             .video-background {
                 display: none;
-            }
-            .main-layout {
-                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Масштабный баннер сверху -->
+    <!-- 1. Баннер 45vh -->
     <div class="full-width-banner"></div>
 
-    <!-- 2. Главная рабочая область (Сетка: Видео - Контент - Видео) -->
+    <!-- 2. Главная область (Сетка с отступами по 10px) -->
     <div class="main-layout">
 
-        <!-- Левое видео (Замените оба ID bssmGzicB48 на свой реальный ID) -->
+        <!-- Левое видео -->
         <div class="video-background">
+            <!-- ВНИМАНИЕ: Замените ОБА текста ВАШ_ID_ВИДЕО на реальный буквенно-цифровой код Shorts -->
             <iframe src="https://youtube.com" allow="autoplay"></iframe>
         </div>
 
-        <!-- Центральный увеличенный блок информации -->
+        <!-- Центральный резиновый блок -->
         <div class="container">
             <h1>NOIR CORTEGE</h1>
             <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
@@ -165,7 +162,7 @@
             </div>
         </div>
 
-        <!-- Правое видео (Замените оба ID bssmGzicB48 на свой реальный ID) -->
+        <!-- Правое видео -->
         <div class="video-background">
             <iframe src="https://youtube.com" allow="autoplay"></iframe>
         </div>
