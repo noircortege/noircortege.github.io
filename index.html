@@ -25,7 +25,7 @@
         .full-width-banner {
             width: 100%;
             height: 45vh; 
-            background-image: url('media/img/top.jpg');
+            background-image: url('./media/img/top.jpg'); /* Четкий относительный путь */
             background-size: cover;
             background-position: top center;
             border-bottom: 1px solid #1a1a1a;
@@ -38,18 +38,18 @@
             display: flex;
             justify-content: space-between; 
             align-items: flex-start;
-            gap: 10px; /* Отступ 10px между видео и информацией */
+            gap: 10px; 
             width: 100%;
-            margin-top: 10px; /* Отступ 10px от баннера сверху */
-            padding: 0 10px 20px 10px; /* Отступы ровно 10px от краев экрана */
+            margin-top: 10px; 
+            padding: 0 10px 20px 10px; 
         }
 
-        /* Полностью резиновый центральный блок, объединяющий карточку и новое фото */
+        /* Полностью резиновый центральный блок */
         .center-column {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px; /* Отступ ровно 10px между карточкой информации и новым фото */
+            gap: 10px; 
             min-width: 280px;
         }
 
@@ -112,7 +112,7 @@
             background: #1a1a1a;
         }
 
-        /* Новый резиновый блок для квадратного фото */
+        /* Блок для квадратного фото */
         .photo-block {
             width: 100%;
             border: 1px solid #222;
@@ -125,8 +125,8 @@
         .photo-block img {
             width: 100%;
             height: auto;
-            aspect-ratio: 1 / 1; /* Гарантирует строгий квадратные пропорции */
-            object-fit: cover; /* Красиво вписывает фото, если оно изначально не совсем квадратное */
+            aspect-ratio: 1 / 1; 
+            object-fit: cover; 
         }
 
         /* Боковые видео фиксированной ширины */
@@ -158,21 +158,17 @@
 </head>
 <body>
 
-    <!-- 1. Баннер 45vh с картинкой top.jpg -->
     <div class="full-width-banner"></div>
 
-    <!-- 2. Главная ультра-широкая область -->
     <div class="main-layout">
 
         <!-- Левое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="media/video/promo.mp4" type="video/mp4">
-                Ваш браузер не поддерживает встроенные видео.
+                <source src="./media/video/promo.mp4" type="video/mp4">
             </video>
         </div>
 
-        <!-- Центральная резиновая колонка (Контент + Фото ниже) -->
         <div class="center-column">
             
             <!-- Блок информации -->
@@ -189,9 +185,9 @@
                 </div>
             </div>
 
-            <!-- Новый блок с квадратной картинкой photo_1.jpg -->
+            <!-- Блок с квадратной картинкой photo_1.jpg -->
             <div class="photo-block">
-                <img src="media/img/photo_1.jpg" alt="Noir Cortege Artwork">
+                <img src="./media/img/photo_1.jpg" alt="Noir Cortege Artwork">
             </div>
 
         </div>
@@ -199,8 +195,7 @@
         <!-- Правое видео -->
         <div class="video-background">
             <video autoplay loop muted playsinline>
-                <source src="media/video/promo.mp4" type="video/mp4">
-                Ваш браузер не поддерживает встроенные видео.
+                <source src="./media/video/promo.mp4" type="video/mp4">
             </video>
         </div>
 
