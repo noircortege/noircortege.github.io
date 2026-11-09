@@ -7,279 +7,65 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: #0b0b0b; 
-            color: #f5f5f5; 
-            font-family: 'Courier New', Courier, monospace; 
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            min-height: 100vh; 
-            text-align: center;
-            overflow-y: auto; 
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Шапка-баннер */
-        .full-width-banner {
-            width: 100%;
-            height: 35vh; 
-            background-image: url('media/img/banner.webp'); 
-            background-size: cover;
-            background-position: center center;
-            border-bottom: 1px solid #1a1a1a;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: block;
-        }
-
-        /* Контейнер для кастомного ползунка громкости */
-        .volume-highway {
-            width: 100%;
-            margin-top: 10px; 
-            padding: 0 10px;  
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 20;
-        }
-
-        .volume-wrapper {
-            width: 100%;
-            background: #111;
-            border: 1px solid #222;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        }
-
-        /* Иконка копов на нуле громкости */
-        .police-icon {
-            width: 40px;
-            height: 40px;
-            background-image: url('media/img/police_car.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            flex-shrink: 0;
-            transition: transform 0.2s ease;
-        }
-
-        /* Стилизация самого трека ползунка */
-        .custom-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #222;
-            border-radius: 3px;
-            outline: none;
-            border: 1px solid #333;
-            cursor: pointer;
-        }
-
-        /* Дизайн бегунка (Гелик gclass.png) для Chrome, Safari, Edge */
-        .custom-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 45px;
-            height: 45px;
-            background-image: url('media/img/gclass.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-        }
-
-        .custom-slider::-webkit-slider-thumb:active {
-            transform: scale(1.1);
-        }
-
-        /* Дизайн бегунка для Firefox */
-        .custom-slider::-moz-range-thumb {
-            width: 45px;
-            height: 45px;
-            background-image: url('media/img/gclass.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-        }
-
-        /* Главная трехколоночная сетка ниже ползунка */
-        .main-layout {
-            display: flex;
-            justify-content: space-between; 
-            align-items: flex-start;
-            gap: 10px; 
-            width: 100%;
-            margin-top: 10px; 
-            padding: 0 10px 20px 10px; 
-        }
-
-        /* Полностью резиновый центральный блок */
-        .center-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px; 
-            min-width: 280px;
-        }
-
-        /* Центральная карточка с информацией */
-        .container {
-            width: 100%;
-            border: 1px solid #222;
-            padding: 60px 20px; 
-            background: rgba(17, 17, 17, 0.95);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            border-radius: 4px;
-        }
-        h1 { 
-            font-size: 2.5rem; 
-            letter-spacing: 6px; 
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .subtitle { 
-            font-size: 12px; 
-            line-height: 1.8;
-            color: #888;
-            margin-bottom: 45px;
-        }
+        body { background: #0b0b0b; color: #f5f5f5; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-align: center; overflow-x: hidden; }
         
-        /* Кнопки соцсетей */
-        .links-title {
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            min-width: 140px; 
-            padding: 14px 15px; 
-            border: 1px solid #333;
-            color: #aaa;
-            text-decoration: none;
-            font-size: 0.9rem; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-        .social-btn:hover {
-            border-color: #fff;
-            color: #fff;
-            background: #1a1a1a;
-        }
+        #audio-overlay { position: fixed; top: 15px; right: 15px; background: rgba(255, 0, 0, 0.85); padding: 10px 20px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; z-index: 9999; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
 
-        /* Горизонтальная сетка для трех фото */
-        .photo-gallery {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px; 
-            width: 100%;
-        }
+        .full-width-banner { width: 100%; height: 35vh; background: url('media/img/banner.webp') center/cover; border-bottom: 1px solid #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .volume-highway { width: 100%; margin-top: 10px; padding: 0 10px; z-index: 20; }
+        .volume-wrapper { width: 100%; background: #111; border: 1px solid #222; padding: 15px 20px; display: flex; align-items: center; gap: 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        .police-icon { width: 40px; height: 40px; background: url('media/img/police_car.png') center/contain no-repeat; flex-shrink: 0; transition: transform 0.2s ease; }
+        
+        .custom-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #222; border-radius: 3px; outline: none; border: 1px solid #333; cursor: pointer; }
+        .custom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 45px; height: 45px; background: url('media/img/gclass.png') center/contain no-repeat; cursor: pointer; transition: transform 0.1s ease; }
+        .custom-slider::-webkit-slider-thumb:active { transform: scale(1.1); }
+        .custom-slider::-moz-range-thumb { width: 45px; height: 45px; background: url('media/img/gclass.png') center/contain no-repeat; border: none; background-color: transparent; cursor: pointer; }
 
-        /* Блок для каждой отдельной карточки */
-        .photo-block {
-            flex: 1; 
-            border: 1px solid #222;
-            background: rgba(17, 17, 17, 0.95);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            border-radius: 4px;
-            overflow: hidden;
-            display: flex;
-        }
-        .photo-block img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1 / 1; 
-            object-fit: cover; 
-        }
+        .main-layout { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; width: 100%; margin-top: 10px; padding: 0 10px 20px 10px; }
+        .center-column { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 280px; }
+        
+        .container { width: 100%; border: 1px solid #222; padding: 60px 20px; background: rgba(17, 17, 17, 0.95); box-shadow: 0 20px 50px rgba(0,0,0,0.9); border-radius: 4px; }
+        h1 { font-size: 2.5rem; letter-spacing: 6px; margin-bottom: 20px; text-transform: uppercase; font-weight: bold; }
+        .subtitle { font-size: 12px; line-height: 1.8; color: #888; margin-bottom: 45px; }
+        .links-title { font-size: 0.9rem; color: #555; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .social-links, .photo-gallery { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; width: 100%; }
+        .photo-gallery { justify-content: space-between; gap: 10px; }
+        
+        .social-btn { display: flex; align-items: center; justify-content: center; gap: 12px; min-width: 140px; padding: 14px 15px; border: 1px solid #333; color: #aaa; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; border-radius: 2px; }
+        .social-btn:hover { border-color: #fff; color: #fff; background: #1a1a1a; }
+        
+        .photo-block { flex: 1; border: 1px solid #222; background: rgba(17, 17, 17, 0.95); box-shadow: 0 20px 50px rgba(0,0,0,0.9); border-radius: 4px; overflow: hidden; display: flex; }
+        .photo-block img { width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; }
 
-        /* Боковые видео фиксированной ширины */
-        .video-background {
-            width: 360px; 
-            height: 640px; 
-            border: 1px solid #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-            opacity: 0.4;
-            transition: opacity 0.3s ease;
-            flex-shrink: 0; 
-        }
-        .video-background:hover {
-            opacity: 0.7;
-        }
-        .video-background video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
+        .video-background { width: 360px; height: 640px; border: 1px solid #1a1a1a; border-radius: 8px; overflow: hidden; opacity: 0.4; transition: opacity 0.3s ease; flex-shrink: 0; }
+        .video-background:hover { opacity: 0.7; }
+        .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
-        @media (max-width: 1100px) {
-            .video-background {
-                display: none;
-            }
-        }
+        @media (max-width: 1100px) { .video-background { display: none; } }
     </style>
 </head>
 <body>
 
-    <!-- Скрытый плеер (loop отвечает за бесконечное зацикливание) -->
-    <audio id="bg-beat" loop preload="auto">
-        <source src="media/sound/beat.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Шапка-баннер -->
+    <div id="audio-overlay">Tap to Turn On Sound 🔊</div>
+    <audio id="bg-beat" loop preload="auto"><source src="media/sound/beat.mp3" type="audio/mpeg"></audio>
     <div class="full-width-banner"></div>
 
-    <!-- ТРАССА ГРОМКОСТИ -->
     <div class="volume-highway">
         <div class="volume-wrapper">
             <div class="police-icon" id="police-car"></div>
-            <!-- value="0.25" выставляет Гелик ровно на 25% длины трассы -->
             <input type="range" id="volume-control" class="custom-slider" min="0" max="1" step="0.01" value="0.25">
         </div>
     </div>
 
-    <!-- Главная трехколоночная область -->
     <div class="main-layout">
-
-        <!-- Левое видео -->
-        <div class="video-background">
-            <video autoplay loop muted playsinline>
-                <source src="video/promo_1.mp4" type="video/mp4">
-            </video>
-        </div>
+        <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="video/promo_1.mp4" type="video/mp4"></video></div>
 
         <div class="center-column">
-            
-            <!-- Блок информации -->
             <div class="container">
                 <h1>NOIR CORTEGE</h1>
                 <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
-
                 <div class="links-title">Listen & Follow</div>
                 <div class="social-links">
                     <a href="#" target="_blank" class="social-btn"><i class="fa-solid fa-music"></i> Yandex</a>
@@ -289,54 +75,29 @@
                 </div>
             </div>
 
-            <!-- Ряд из трех квадратных картинок -->
             <div class="photo-gallery">
-                <div class="photo-block">
-                    <img src="media/img/photo_1.webp" alt="Noir Cortege Artwork 1">
-                </div>
-                <div class="photo-block">
-                    <img src="media/img/photo_2.webp" alt="Noir Cortege Artwork 2">
-                </div>
-                <div class="photo-block">
-                    <img src="media/img/photo_3.webp" alt="Noir Cortege Artwork 3">
-                </div>
+                <div class="photo-block"><img src="media/img/photo_1.webp" alt="1"></div>
+                <div class="photo-block"><img src="media/img/photo_2.webp" alt="2"></div>
+                <div class="photo-block"><img src="media/img/photo_3.webp" alt="3"></div>
             </div>
-
         </div>
 
-        <!-- Правое видео -->
-        <div class="video-background">
-            <video autoplay loop muted playsinline>
-                <source src="video/promo_1.mp4" type="video/mp4">
-            </video>
-        </div>
-
+        <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="video/promo_1.mp4" type="video/mp4"></video></div>
     </div>
 
     <script>
-        const audio = document.getElementById('bg-beat');
-        const volumeSlider = document.getElementById('volume-control');
-        const policeCar = document.getElementById('police-car');
-// Инициализируем стартовую громкость звукового движка на 25% (0.25)
-    audio.volume = volumeSlider.value;
-// Трек запустится на 25% громкости сразу после первого клика по экрану
-    document.addEventListener('click', () => {
-        if (audio.paused && audio.volume > 0) {
-    audio.play().catch(e => console.log("Ожидание клика пользователя"));
-        }
-    }, { once: true });
-// Изменение громкости при перетаскивании Гелика
-    volumeSlider.addEventListener('input', (e) => {
-        const currentVolume = e.target.value;
-    audio.volume = currentVolume;
-        if (currentVolume > 0 && audio.paused) {
-    audio.play();
-    }
-        if (currentVolume == 0) {
-    policeCar.style.transform = 'scale(1.25) rotate(-8deg)';
-        } else if (currentVolume < 0.15) {
-    policeCar.style.transform = 'scale(1.1)';
-        } else {
-    policeCar.style.transform = 'scale(1)';
-        }
-    });
+        const audio = document.getElementById('bg-beat'), slider = document.getElementById('volume-control'), police = document.getElementById('police-car'), overlay = document.getElementById('audio-overlay');
+        audio.volume = slider.value;
+
+        const initAudio = () => { audio.play().then(() => overlay.style.display = 'none').catch(e => {}); };
+        overlay.addEventListener('click', initAudio);
+        document.addEventListener('click', initAudio, { once: true });
+
+        slider.addEventListener('input', (e) => {
+            const v = e.target.value; audio.volume = v;
+            if (v > 0 && audio.paused) { audio.play(); overlay.style.display = 'none'; }
+            police.style.transform = v == 0 ? 'scale(1.25) rotate(-8deg)' : (v < 0.15 ? 'scale(1.1)' : 'scale(1)');
+        });
+    </script>
+</body>
+</html>
