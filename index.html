@@ -12,7 +12,7 @@
         #audio-overlay { position: fixed; top: 15px; right: 15px; background: rgba(255, 0, 0, 0.85); padding: 10px 20px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; z-index: 9999; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
 
-        .full-width-banner { width: 100%; height: 25vh; background: url('media/img/banner.webp') center/cover; border-bottom: 1px solid #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .full-width-banner { width: 100%; height: 35vh; background: url('media/img/banner.webp') center/cover; border-bottom: 1px solid #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .volume-highway { width: 100%; margin-top: 10px; padding: 0 10px; z-index: 20; }
         .volume-wrapper { width: 100%; background: #111; border: 1px solid #222; padding: 15px 20px; display: flex; align-items: center; gap: 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
         .police-icon { width: 40px; height: 40px; background: url('media/img/police_car.png') center/contain no-repeat; flex-shrink: 0; transition: transform 0.2s ease; }
@@ -48,8 +48,12 @@
 </head>
 <body>
 
+    <!-- Всплывающая кнопка для обхода блокировки звука в браузерах -->
     <div id="audio-overlay">Tap to Turn On Sound 🔊</div>
-    <audio id="bg-beat" loop preload="auto"><source src="media/sound/beat.mp3" type="audio/mpeg"></audio>
+    
+    <!-- Путь исправлен: sound/ вместо media/sound/ -->
+    <audio id="bg-beat" loop preload="auto"><source src="sound/beat.mp3" type="audio/mpeg"></audio>
+    
     <div class="full-width-banner"></div>
 
     <div class="volume-highway">
@@ -60,6 +64,7 @@
     </div>
 
     <div class="main-layout">
+        <!-- Левое видео (Путь исправлен: video/ вместо media/video/) -->
         <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="video/promo_1.mp4" type="video/mp4"></video></div>
 
         <div class="center-column">
@@ -82,6 +87,7 @@
             </div>
         </div>
 
+        <!-- Правое видео (Путь исправлен: video/ вместо media/video/) -->
         <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="video/promo_1.mp4" type="video/mp4"></video></div>
     </div>
 
@@ -89,6 +95,7 @@
         const audio = document.getElementById('bg-beat'), slider = document.getElementById('volume-control'), police = document.getElementById('police-car'), overlay = document.getElementById('audio-overlay');
         audio.volume = slider.value;
 
+        // Принудительно запускаем аудиопоток по клику на плашку или экран
         const initAudio = () => { audio.play().then(() => overlay.style.display = 'none').catch(e => {}); };
         overlay.addEventListener('click', initAudio);
         document.addEventListener('click', initAudio, { once: true });
