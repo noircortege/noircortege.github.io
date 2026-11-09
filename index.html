@@ -7,12 +7,19 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0b0b0b; color: #f5f5f5; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-align: center; overflow-x: hidden; }
         
-        #audio-overlay { position: fixed; top: 15px; right: 15px; background: rgba(255, 0, 0, 0.85); padding: 10px 20px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; z-index: 9999; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+        /* Комплексная CSS-защита от выделения и сохранения элементов */
+        body, img, video { 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
 
-        .full-width-banner { width: 100%; height: 35vh; background: url('media/img/banner.webp'); background-size: cover; background-position: center center; border-bottom: 1px solid #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: block; }
+        body { background: #0b0b0b; color: #f5f5f5; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; min-height: 100vh; text-align: center; overflow-x: hidden; }
+        .full-width-banner { width: 100%; height: 35vh; background: url('media/img/banner.webp') center/cover; border-bottom: 1px solid #1a1a1a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: block; }
         .volume-highway { width: 100%; margin-top: 10px; padding: 0 10px; z-index: 20; }
         .volume-wrapper { width: 100%; background: #111; border: 1px solid #222; padding: 15px 20px; display: flex; align-items: center; gap: 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
         .police-icon { width: 40px; height: 40px; background: url('media/img/police_car.png') center/contain no-repeat; flex-shrink: 0; transition: transform 0.2s ease; }
@@ -36,10 +43,10 @@
         .social-btn { display: flex; align-items: center; justify-content: center; gap: 12px; min-width: 140px; padding: 14px 15px; border: 1px solid #333; color: #aaa; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; border-radius: 2px; }
         .social-btn:hover { border-color: #fff; color: #fff; background: #1a1a1a; }
         
-        .photo-block { flex: 1; border: 1px solid #222; background: rgba(17, 17, 17, 0.95); box-shadow: 0 20px 50px rgba(0,0,0,0.9); border-radius: 4px; overflow: hidden; display: flex; }
+        .photo-block { flex: 1; border: 1px solid #222; background: rgba(17, 17, 17, 0.95); box-shadow: 0 20px 50px rgba(0,0,0,0.9); border-radius: 4px; overflow: hidden; display: flex; pointer-events: none; /* Запрещает любое кликанье по картинкам */ }
         .photo-block img { width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; }
 
-        .video-background { width: 360px; height: 640px; border: 1px solid #1a1a1a; border-radius: 8px; overflow: hidden; opacity: 0.4; transition: opacity 0.3s ease; flex-shrink: 0; }
+        .video-background { width: 360px; height: 640px; border: 1px solid #1a1a1a; border-radius: 8px; overflow: hidden; opacity: 0.4; transition: opacity 0.3s ease; flex-shrink: 0; pointer-events: none; }
         .video-background:hover { opacity: 0.7; }
         .video-background video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -48,23 +55,22 @@
 </head>
 <body>
 
-    <!-- Всплывающая кнопка для обхода блокировки звука в браузерах -->
-    <div id="audio-overlay">Tap to Turn On Sound 🔊</div>
-    
-    <!-- Путь восстановлен под вашу структуру: media/sound/beat.mp3 -->
-    <audio id="bg-beat" loop preload="auto"><source src="media/sound/beat.mp3" type="audio/mpeg"></audio>
+    <!-- Аудиопоток настроен на автостарт (autoplay) в беззвучном режиме -->
+    <audio id="bg-beat" loop autoplay muted preload="auto">
+        <source src="media/sound/beat.mp3" type="audio/mpeg">
+    </audio>
     
     <div class="full-width-banner"></div>
 
     <div class="volume-highway">
         <div class="volume-wrapper">
-            <div class="police-icon" id="police-car"></div>
-            <input type="range" id="volume-control" class="custom-slider" min="0" max="1" step="0.01" value="0.25">
+            <div class="police-icon" id="police-car" style="transform: scale(1.25) rotate(-8deg);"></div>
+            <!-- Ползунок по умолчанию выставлен на 0 (минимальное значение) -->
+            <input type="range" id="volume-control" class="custom-slider" min="0" max="1" step="0.01" value="0">
         </div>
     </div>
 
     <div class="main-layout">
-        <!-- Левое видео восстановлено под вашу структуру: media/video/... -->
         <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="media/video/promo_1.mp4" type="video/mp4"></video></div>
 
         <div class="center-column">
@@ -87,24 +93,56 @@
             </div>
         </div>
 
-        <!-- Правое видео восстановлено под вашу структуру: media/video/... -->
         <div class="video-background"><video autoplay loop muted playsinline preload="auto"><source src="media/video/promo_1.mp4" type="video/mp4"></video></div>
     </div>
 
     <script>
-        const audio = document.getElementById('bg-beat'), slider = document.getElementById('volume-control'), police = document.getElementById('police-car'), overlay = document.getElementById('audio-overlay');
-        audio.volume = slider.value;
+        const audio = document.getElementById('bg-beat'), slider = document.getElementById('volume-control'), police = document.getElementById('police-car');
+        
+        audio.volume = 0;
 
-        // Разблокировка аудио при клике
-        const initAudio = () => { audio.play().then(() => overlay.style.display = 'none').catch(e => {}); };
-        overlay.addEventListener('click', initAudio);
-        document.addEventListener('click', initAudio, { once: true });
+        // Пытаемся принудительно запустить тихий плеер сразу при входе на страницу
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.play().catch(() => {
+                // Если браузер заблокировал тихий автоплей, активируем его при любом первом движении мыши/клике
+                const forcePlay = () => { audio.play(); document.removeEventListener('click', forcePlay); document.removeEventListener('mousemove', forcePlay); };
+                document.addEventListener('click', forcePlay);
+                document.addEventListener('mousemove', forcePlay);
+            });
+        });
 
+        // Управление громкостью Гелика
         slider.addEventListener('input', (e) => {
-            const v = e.target.value; audio.volume = v;
-            if (v > 0 && audio.paused) { audio.play(); overlay.style.display = 'none'; }
+            const v = e.target.value;
+            
+            // Если звук прибавляют — отключаем системный "mute" у плеера
+            if (v > 0) { audio.muted = false; }
+            audio.volume = v;
+            
+            if (v > 0 && audio.paused) { audio.play(); }
             police.style.transform = v == 0 ? 'scale(1.25) rotate(-8deg)' : (v < 0.15 ? 'scale(1.1)' : 'scale(1)');
         });
+
+        // СКРИПТОВАЯ ЗАЩИТА КОНТЕНТА ОТ СКАЧИВАНИЯ
+
+        // 1. Блокировка контекстного меню (правый клик мыши)
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // 2. Блокировка горячих клавиш сохранения (Ctrl+S, Ctrl+U, F12)
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.keyCode === 123 || // F12 (Инструменты разработчика)
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                (e.ctrlKey && e.keyCode === 83) || // Ctrl+S (Сохранить страницу)
+                (e.ctrlKey && e.keyCode === 85) // Ctrl+U (Исходный код)
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 3. Дополнительная защита от перетаскивания медиафайлов мышкой
+        document.addEventListener('dragstart', e => e.preventDefault());
     </script>
 </body>
 </html>
