@@ -16,80 +16,85 @@
             align-items: center; 
             min-height: 100vh; 
             text-align: center;
+            /* Включаем скроллинг */
+            overflow-y: auto; 
             overflow-x: hidden;
             position: relative;
         }
 
         /* Полноэкранная шапка-баннер на самом верху */
-         .full-width-banner {
+        .full-width-banner {
             width: 100%;
-            height: 45vh; /* Увеличили высоту, чтобы влезло больше картинки */
-            background-image: url('media/img/top.jpg'); 
+            height: 45vh; /* Увеличили высоту баннера, чтобы он выглядел масштабнее */
+            background-image: url('media/img/banner.jpg'); 
             background-size: cover;
-            background-position: top center; /* Начинаем показ строго с верха картинки */
+            background-position: top center;
             border-bottom: 1px solid #1a1a1a;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Общий контейнер для нижней части (карточка + видео по бокам) */
-        .content-wrapper {
-            max-width: 550px;
+        /* Главная трехколоночная сетка для нижней части сайта */
+        .main-layout {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px; /* Отступы между видео и центральным блоком */
+            max-width: 1400px; 
             width: 100%;
-            position: relative;
-            margin-top: 40px; /* Отступ карточки от баннера сверху */
-            padding: 0 20px 40px 20px;
+            margin-top: 40px; /* Аккуратный отступ от баннера в 45vh */
+            padding: 0 30px 60px 30px; /* Отступ снизу, чтобы при скролле сайт не упирался в край экрана */
         }
 
-        /* Центральная карточка с информацией */
+
+        /* Увеличенная центральная карточка с информацией */
         .container {
+            max-width: 650px; /* Увеличили ширину карточки (было 550px) */
             width: 100%;
             border: 1px solid #222;
-            padding: 40px 30px;
+            padding: 60px 40px; /* Увеличили внутренние отступы, чтобы блок стал больше */
             background: rgba(17, 17, 17, 0.95);
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             border-radius: 4px;
-            position: relative;
-            z-index: 10;
         }
         h1 { 
-            font-size: 2.3rem; 
-            letter-spacing: 5px; 
-            margin-bottom: 15px;
+            font-size: 2.8rem; /* Увеличили размер главного заголовка */
+            letter-spacing: 6px; 
+            margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: bold;
         }
         .subtitle { 
-            font-size: 0.95rem; 
-            line-height: 1.6;
+            font-size: 1.1rem; /* Увеличили шрифт описания */
+            line-height: 1.7;
             color: #777;
-            margin-bottom: 35px;
+            margin-bottom: 45px;
         }
         
         /* Кнопки соцсетей */
         .links-title {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #555;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-width: 130px;
-            padding: 10px 15px;
+            gap: 12px;
+            min-width: 160px; /* Увеличили ширину кнопок (было 130px) */
+            padding: 14px 20px; /* Сделали кнопки крупнее и объемнее */
             border: 1px solid #333;
             color: #aaa;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.95rem; /* Слегка увеличили текст внутри кнопок */
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
@@ -101,25 +106,20 @@
             background: #1a1a1a;
         }
 
-            /* Видео по бокам */
+        /* Увеличенные боковые видео (теперь прокручиваются вместе с сайтом) */
         .video-background {
-            position: fixed;
-            top: calc(45vh + 40px); /* Изменили 45vh на 55vh, чтобы выровнять с карточкой */
-            width: 315px;
-            height: 560px;
-            z-index: 1;
-            pointer-events: none;
+            width: 360px; /* Увеличили ширину шортсов (было 315px) */
+            height: 640px; /* Увеличили высоту под стандарт 9:16 (было 560px) */
             border: 1px solid #1a1a1a;
             border-radius: 8px;
             overflow: hidden;
             opacity: 0.4;
             transition: opacity 0.3s ease;
+            flex-shrink: 0; /* Видео не будут сжиматься */
         }
         .video-background:hover {
             opacity: 0.7;
         }
-        .video-left { left: 5%; }
-        .video-right { right: 5%; }
 
         .video-background iframe {
             width: 100%;
@@ -127,43 +127,49 @@
             border: none;
         }
 
-        /* Скрываем видео на мобильных устройствах */
-        @media (max-width: 1200px) {
+        /* Адаптивность: плавно убираем боковые видео, если экран становится слишком узким */
+        @media (max-width: 1250px) {
             .video-background {
                 display: none;
+            }
+            .main-layout {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Полноэкранный баннер на всю ширину -->
+    <!-- 1. Масштабный баннер сверху -->
     <div class="full-width-banner"></div>
 
-    <!-- Левое видео (вместо bssmGzicB48 вставьте свой ID из YouTube Shorts) -->
-    <div class="video-background video-left">
-        <iframe src="https://youtube.com" allow="autoplay"></iframe>
-    </div>
+    <!-- 2. Главная рабочая область (Сетка: Видео - Контент - Видео) -->
+    <div class="main-layout">
 
-    <!-- 2. Нижняя центральная часть сайта под баннером -->
-    <div class="content-wrapper">
+        <!-- Левое видео (Замените оба ID bssmGzicB48 на свой реальный ID) -->
+        <div class="video-background">
+            <iframe src="https://youtube.com" allow="autoplay"></iframe>
+        </div>
+
+        <!-- Центральный увеличенный блок информации -->
         <div class="container">
             <h1>NOIR CORTEGE</h1>
             <p class="subtitle">AI music crew. Straight from St. Petersburg.<br>Well-mannered, but uneducated.</p>
 
             <div class="links-title">Listen & Follow</div>
             <div class="social-links">
-                <a href="#" target="_blank" class="social-btn"><i class="fa-solid fa-music"></i> Yandex music</a>
+                <a href="#" target="_blank" class="social-btn"><i class="fa-solid fa-music"></i> Yandex</a>
                 <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-spotify"></i> Spotify</a>
                 <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
                 <a href="#" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> Tik-Tok</a>
             </div>
         </div>
-    </div>
 
-    <!-- Правое видео (вместо bssmGzicB48 вставьте тот же ID из YouTube Shorts) -->
-    <div class="video-background video-right">
-        <iframe src="https://youtube.com" allow="autoplay"></iframe>
+        <!-- Правое видео (Замените оба ID bssmGzicB48 на свой реальный ID) -->
+        <div class="video-background">
+            <iframe src="https://youtube.com" allow="autoplay"></iframe>
+        </div>
+
     </div>
 
 </body>
