@@ -64,7 +64,7 @@
 
     <div class="volume-highway">
         <div class="volume-wrapper">
-            <div class="police-icon" id="police-car" style="transform: scale(1.25) rotate(-8deg);"></div>
+            <div class="police-icon" id="police-car" style="transform: scale(1.3);"></div>
             <!-- Ползунок по умолчанию выставлен на 0 (минимальное значение) -->
             <input type="range" id="volume-control" class="custom-slider" min="0" max="1" step="0.01" value="0">
         </div>
@@ -120,7 +120,7 @@
             audio.volume = v;
             
             if (v > 0 && audio.paused) { audio.play(); }
-            police.style.transform = v == 0 ? 'scale(1.25) rotate(-8deg)' : (v < 0.15 ? 'scale(1.1)' : 'scale(1)');
+            police.style.transform = v == 0 ? 'scale(1.3)' : (v < 0.15 ? 'scale(1.2)' : 'scale(1)');
         });
 
         // СКРИПТОВАЯ ЗАЩИТА КОНТЕНТА ОТ СКАЧИВАНИЯ
